@@ -3,6 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Code2 } from "lucide-react";
 import { navLinks } from "../data/portfolio";
 
+function scrollToSection(href) {
+  const id = href.replace("#", "");
+  const el = document.getElementById(id);
+  if (el) {
+    const offset = 80; // navbar height
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
@@ -35,6 +45,7 @@ export default function Navbar() {
         {/* Logo */}
         <motion.a
           href="#home"
+          onClick={(e) => { e.preventDefault(); scrollToSection("#home"); }}
           style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
           whileHover={{ scale: 1.05 }}
         >
@@ -59,6 +70,7 @@ export default function Navbar() {
               <motion.a
                 key={link.label}
                 href={link.href}
+                onClick={(e) => { e.preventDefault(); scrollToSection(link.href); }}
                 style={{
                   padding: "8px 16px",
                   borderRadius: 8,
@@ -116,14 +128,20 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMenuOpen(false);
+                  // Small delay so menu closes before scroll
+                  setTimeout(() => scrollToSection(link.href), 100);
+                }}
                 style={{
                   display: "block",
-                  padding: "12px 0",
+                  padding: "14px 0",
                   color: "#94a3b8",
                   textDecoration: "none",
                   borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  fontSize: "0.95rem",
+                  fontSize: "1rem",
+                  fontWeight: 500,
                 }}
               >
                 {link.label}

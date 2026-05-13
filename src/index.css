@@ -24,7 +24,6 @@
 
 html {
   scroll-behavior: smooth;
-  cursor: none;
 }
 
 body {
@@ -33,16 +32,15 @@ body {
   color: var(--text-primary);
   overflow-x: hidden;
   line-height: 1.6;
-  cursor: none;
 }
 
-a, button, input, textarea, [role="button"] {
-  cursor: none;
-}
-
-@media (hover: none) and (pointer: coarse) {
-  html, body, a, button, input, textarea, [role="button"] {
-    cursor: auto !important;
+/* Only hide cursor on true desktop pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  html, body {
+    cursor: none;
+  }
+  a, button, input, textarea, select, [role="button"] {
+    cursor: none;
   }
 }
 
